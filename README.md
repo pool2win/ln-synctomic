@@ -31,3 +31,22 @@ payments.
 
 [Github Discussions](https://github.com/pool2win/ln-synctomic/discussions) for
 any comments and feedback.
+
+
+# TL;DR
+
+Input multi channel outputs into a single commitment that can be spent
+using MuSig2 signature. See figure below.
+
+<picture>
+ <img alt="YOUR-ALT-TEXT" src="./docs/commitment-transactions.png">
+</picture>
+
+A "broadcast" built using unicast over onion routing. Turns out this
+is not so expensive. See spec document for details.
+
+<picture>
+ <img alt="YOUR-ALT-TEXT" src="./docs/object-interaction.png">
+</picture>
+
+
