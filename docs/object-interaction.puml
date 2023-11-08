@@ -1,0 +1,69 @@
+@startuml
+
+participant Alice
+participant Bob
+participant Carol
+
+note across
+
+Setup is an onion message that includes:
+pubkeys,
+pubnonces,
+balances and balances'
+
+end note
+
+Alice -> Bob: Setup(A)
+Bob -> Carol: Setup(AB)
+Carol -> Bob: Setup(ABC)
+Bob -> Alice: Setup(ABC)
+
+note across
+
+At this point all parties have all pubnonces and pubkeys without
+knowing who the other parties are. Only Alice knows the connection
+between a node's LN pubkey and MuSig2 key/nonce material.
+
+Bob knows Carol's material, and Carol only knows Bob's material.
+
+end note
+
+Alice -> Alice: Create GCT and CT
+Bob -> Bob: Create GCT and CT
+Carol -> Carol: Create GCT and CT
+
+note across
+
+Next, we gather the partial signatures, again using onion
+packets. Each party has to maintain state for the session started with
+the Setup messages.
+
+During this phase, all nodes also generate aggregate keys for the
+revocation output.
+
+end note
+
+Alice -> Bob: CollectPartialSigs(A)
+Bob -> Carol: CollectPartialSigs(AB)
+Carol -> Bob: CollectPartialSigs(ABC)
+Bob -> Alice: CollectPartialSigs(ABC)
+
+Alice -> Bob: PushAggSig
+Bob -> Carol: PushAggSig
+
+Carol -> Bob: AckAggSig
+Bob -> Alice : PushAggSig
+
+note across
+
+With the signatures available for GCT and aggregate keys for
+revocation available. The parties can now update their balances.
+
+end note
+
+Alice -> Alice: Update channel state
+Bob -> Bob: Update channel state
+Carol -> Carol: Update channel state
+
+
+@enduml
