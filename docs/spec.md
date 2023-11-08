@@ -196,6 +196,34 @@ shows the simplicity of the protocol.
 
 ![object-interaction](./object-interaction.png)
 
+The highlevel protocol can be described as below:
+
+1. Setup A -> B: A sends setup message with it's pubnonces and pubkey material in an
+   onion packet to B.
+2. Setup B -> C: B sends setup message to C with it's key and nonce
+   materials and includes the onion packet it received from A.
+3. Setup C -> B: C adds its materials and forwards the rest of the
+   onion back to B.
+4. Setup B -> A: B finally sends the onion back to A, which has all
+   the materials now available.
+
+# Scalability
+
+TODO: Explain better and verify proposed solution
+
+## Multiplex funding outputs
+
+TODO: Explain better and verify proposed solution
+
+FT has multiple A/B outputs for small amounts. Payments consume on a
+single output at a time. Therefore a channel can participate in a
+number of payments simultaneously.
+
+## Combining funding outputs for large payment amounts
+
+TODO: Explain better and verify proposed solution
+
+Multiple FT A/B outputs can be combined to pay for larger amounts.
 
 # Analysis
 
